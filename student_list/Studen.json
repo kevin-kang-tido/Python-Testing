@@ -1,8 +1,14 @@
 [
-    [
-        "ii",
-        "Female",
-        99,
-        "A"
-    ]
+    {
+        "name": "kevin",
+        "gender": "Male",
+        "score": 99,
+        "grade": "A"
+    },
+    {
+        "name": "ui",
+        "gender": "Female",
+        "score": 90,
+        "grade": "B"
+    }
 ]
