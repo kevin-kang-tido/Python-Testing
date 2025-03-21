@@ -22,8 +22,6 @@ label.grid(row=0,column=0,pady=4,sticky="nsew")
 # entry1 = tk.Entry(root)
 # entry1.grid(row=1,column=0,sticky="nsew")
 
-
-
 #create an input
 inp=tk.Entry(root)
 inp.grid(row=2,column=0,sticky="nsew")
