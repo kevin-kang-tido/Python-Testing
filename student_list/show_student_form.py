@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
+import json
+import os
+
 
 class Student:
     def __init__(self, name, gender, score, grade):
@@ -17,6 +20,7 @@ class StudentWindow:
         self.root = root
         self.root.title("Student Information")
         self.students = []  # List to store student objects
+        self.file_path = r"C:\Users\kang\Desktop\Python-PPUA\student_list\Studen.json"
         
         self.label = tk.Label(self.root, text="Student Name")
         self.label.grid(row=0, column=0, pady=4, sticky="w")
@@ -52,8 +56,6 @@ class StudentWindow:
         self.tree.heading("Gender", text="Gender")
         self.tree.heading("Score", text="Score")
         self.tree.heading("Grade", text="Grade")
-        # self.text_area = tk.Text(self.root, height=10, width=50)
-        # self.text_area.grid(row=6, column=0, columnspan=2, pady=4)
 
     def on_change(self, *args):
         try:
@@ -88,6 +90,9 @@ class StudentWindow:
         if name and gender and grade != "N/A":
             student = Student(name, gender, score, grade)
             self.students.append(student)
+
+            self.save_student_json()  # Save to JSON file
+
             messagebox.showinfo("Success", "Student added successfully!")
             self.clear_fields()
         else:
@@ -103,13 +108,34 @@ class StudentWindow:
         else:
             for student in self.students:
                 self.tree.insert("", tk.END, values=(student.name, student.gender, student.score, student.grade))
+     ## TODO: save student to the json file 
+    def save_student_json(self):
+        # Save data to a file or database
+        student_data = [student.get_student_data() for student in self.students]
+      # Ensure directory exists
+        os.makedirs(os.path.dirname(self.file_path), exist_ok=True)
 
+        with open(self.file_path, "w") as f:
+            json.dump(student_data, f, indent=4)
    
+    def load_students(self):
+        """Loads student data from the JSON file if it exists."""
+        if os.path.exists(self.file_path):
+            with open(self.file_path, "r") as f:
+                try:
+                    data = json.load(f)
+                    self.students = [Student(**student) for student in data]
+                except json.JSONDecodeError:
+                    self.students = []
+
     def clear_fields(self):
         self.inp_name.delete(0, tk.END)
         self.inp_score.delete(0, tk.END)
         self.gender_combo.set("")
         self.label_4.config(text="Grade: N/A")
+     
+    # Loading the data
+
 
 # Create the window
 root = tk.Tk()
