@@ -19,7 +19,7 @@ class StudentWindow:
         self.root = root
         self.root.title("Student Information")
         self.students = []  # List to store student objects
-        self.file_path = r"C:\Users\kang\Desktop\Python-PPUA\student_list\Studen.json"
+        self.file_path = r"C:\Users\kang\Desktop\Python-PPUA\student_list\Student.json"
 
         # Load students from JSON file
         self.load_students()

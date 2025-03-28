@@ -57,7 +57,9 @@ class StudentWindow:
         self.tree.heading("Score", text="Score")
         self.tree.heading("Grade", text="Grade")
 
-        # self.display_students()
+        ## TODO: load student information from the json file 
+        self.load_students()
+
 
     def on_change(self, *args):
         try:
@@ -91,6 +93,7 @@ class StudentWindow:
 
         if name and gender and grade != "N/A":
             student = Student(name, gender, score, grade)
+            # print(student)
             self.students.append(student)
 
             self.save_student_json()  # Save to JSON file
@@ -121,7 +124,7 @@ class StudentWindow:
             json.dump(student_data, f, indent=4)
    
     def load_students(self):
-        """Loads student data from the JSON file if it exists."""
+        ## TODO: """Loads student data from the JSON file if it exists."""
         if os.path.exists(self.file_path):
             with open(self.file_path, "r") as f:
                 try:
@@ -135,9 +138,7 @@ class StudentWindow:
         self.inp_score.delete(0, tk.END)
         self.gender_combo.set("")
         self.label_4.config(text="Grade: N/A")
-     
     # Loading the data
-
 
 # Create the window
 root = tk.Tk()
