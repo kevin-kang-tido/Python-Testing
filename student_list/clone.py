@@ -2,8 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 import json
-
-
+import os
 
 
 
@@ -15,8 +14,6 @@ class students_info:
         self.gender=gender
         self.score=score
         self.grade=grade
-
-
 
 
 class student_window:
@@ -54,8 +51,6 @@ class student_window:
         self.students=[]
         self.load_data()
 
-
-
     def load_data(self):
         try:
             fileme="Names.json"
@@ -82,14 +77,14 @@ class student_window:
             self.tree.insert("",tk.END,values=(stdnt.name,stdnt.gender,stdnt.score,stdnt.grade))
         pass
         
-
-        
-        
-
     def create_btn(self):
         B=tk.Button(self.root,text="input",command=lambda:self.button_pressed())
         B.grid(row=6,column=2,pady=4,sticky="nsew")
-        return B
+        
+        C=tk.Button(self.root,text="Delete",command=lambda:self.delete_selected())
+        C.grid(row=7,column=2,pady=4,sticky="nsew")
+
+        return B ,C
 
     def button_pressed(self):
         name=self.inp.get()
@@ -102,11 +97,13 @@ class student_window:
         with open(fil_name, 'w') as json_file:
             json.dump(js_string, json_file, indent=4)
        
-       
-        
+         
+    
     
         js_st=json.dumps(student.__dict__,indent=4)
+
         print(js_st)
+
         fl_name=student.name+".json"
         with open(fl_name, 'w') as json_file:
             json.dump(js_st, json_file, indent=4)
@@ -114,6 +111,38 @@ class student_window:
         self.inp.delete(0,tk.END)
         self.inp2.delete(0,tk.END)
 
+
+    def delete_selected(self):
+        # Get the selected item
+        selected_item = self.tree.selection()
+        
+        if not selected_item:
+            messagebox.showwarning("Warning", "Please select an item to delete.")
+            return
+
+        # Get the name of the selected student
+        name = self.tree.item(selected_item, "values")[0]
+        
+        # Remove the item from the Treeview
+        self.tree.delete(selected_item)
+        
+        # Remove the student name from the names list
+        if name in self.names:
+            self.names.remove(name)
+
+        # Update Names.json
+        with open("Names.json", 'w') as json_file:
+            json.dump(json.dumps(self.names), json_file, indent=4)
+
+        # Remove the corresponding JSON file for that student
+        filename = name + ".json"
+
+        if os.path.exists(filename):
+            os.remove(filename)
+
+        messagebox.showinfo("Success", f"Data for {name} has been deleted successfully.")
+            
+    
     def on_change(self,*args):
         try:
             value=int(self.inp2.get())
@@ -138,12 +167,6 @@ class student_window:
                 self.current_grade="A"
         except:
             pass
-        
-
-
-    
-
-
 
 
 #create the windo
@@ -165,8 +188,3 @@ root.mainloop()
 
     
 
-
-
-
-
-root.mainloop()
