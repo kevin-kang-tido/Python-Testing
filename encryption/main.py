@@ -1,6 +1,6 @@
 import random
 
-Array = [0,1,2,3,4,5]
+Array = [0,1,2,3,4,5]  
 
 for i in range (len(Array)):
 
@@ -13,3 +13,18 @@ for i in range (len(Array)):
     Array[rnd] = Value
 
 print(Array)
+
+
+NewArray = [1,2,3,4,5,6,7,8,9]
+
+for i in range(len(NewArray)):
+  # random 
+  ramddomNumer = random.randint(0,9)
+
+  old = NewArray[i]
+
+  NewArray[i] = NewArray[ramddomNumer]
+
+  NewArray[ramddomNumer] = old
+
+print(NewArray)
