@@ -2,10 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 import json
-import os
+import os 
 
-
-
+  
 
 class students_info:
 
@@ -20,6 +19,10 @@ class student_window:
 
     def __init__(self,root):
         self.root=root
+        self.root.title("Login Page")
+        self.root.geometry("300*250")
+
+
         self.label=tk.Label(self.root, text="Student name")
         self.label.grid(row=0,column=0,pady=4,sticky="nsew")
         self.inp=tk.Entry(self.root)
@@ -111,7 +114,6 @@ class student_window:
         self.inp.delete(0,tk.END)
         self.inp2.delete(0,tk.END)
 
-
     def delete_selected(self):
         # Get the selected item
         selected_item = self.tree.selection()
@@ -169,16 +171,11 @@ class student_window:
             pass
 
 
-#create the windo
+# create the windo
 
 root = tk.Tk()
 create_window=student_window(root)
 root.mainloop()
-
-
-
-        
-        
    
 
 
